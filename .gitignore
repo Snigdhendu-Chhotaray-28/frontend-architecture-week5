@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production build artifacts
+dist/
+
+# Test coverage
+coverage/
+
+# OS and Editor metadata
+.DS_Store
+Thumbs.db
+*.local
+.vscode/
+.idea/
