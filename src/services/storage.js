@@ -1,56 +1,12 @@
+import initialTransactionsData from '../data/mockTransactions.json';
+
 const STORAGE_KEYS = {
   TRANSACTIONS: 'fintrack_transactions_v1',
   BUDGET: 'fintrack_monthly_budget_v1',
   THEME: 'fintrack_theme_preference_v1',
 };
 
-export const INITIAL_TRANSACTIONS = [
-  {
-    id: 'tx-1',
-    title: 'Cloud Infrastructure (AWS)',
-    amount: 145.5,
-    type: 'expense',
-    category: 'Software',
-    date: '2026-10-18',
-    notes: 'Monthly EC2 & RDS billing',
-  },
-  {
-    id: 'tx-2',
-    title: 'Client Retainer Payment',
-    amount: 3200.0,
-    type: 'income',
-    category: 'Consulting',
-    date: '2026-10-15',
-    notes: 'Q4 UI/UX contract installment',
-  },
-  {
-    id: 'tx-3',
-    title: 'Coworking Space Membership',
-    amount: 350.0,
-    type: 'expense',
-    category: 'Office',
-    date: '2026-10-12',
-    notes: 'Desk pass & meeting room access',
-  },
-  {
-    id: 'tx-4',
-    title: 'Figma Organization License',
-    amount: 90.0,
-    type: 'expense',
-    category: 'Software',
-    date: '2026-10-10',
-    notes: 'Annual tier for team',
-  },
-  {
-    id: 'tx-5',
-    title: 'Digital Product Sales (Gumroad)',
-    amount: 840.25,
-    type: 'income',
-    category: 'Passive Income',
-    date: '2026-10-08',
-    notes: 'Icon pack & dashboard templates',
-  },
-];
+export const INITIAL_TRANSACTIONS = initialTransactionsData;
 
 export const INITIAL_BUDGET = 2500;
 
