@@ -1,6 +1,6 @@
 import React from 'react';
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { render, screen, within } from '@testing-library/react';
+import { describe, it, expect, beforeEach } from 'vitest';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import { StorageService } from '../services/storage';
@@ -144,5 +144,25 @@ describe('FinTrack Pro Integration Suite', () => {
 
     // AWS transaction should be restored
     expect(screen.getByText('Cloud Infrastructure (AWS)')).toBeInTheDocument();
+  });
+
+  it('triggers budget warning banner when spending is between 80% and 100%', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    // Set budget limit to $700 so initial expenses ($585.50) are at ~83.6% (warning status)
+    const editBudgetBtn = screen.getByTestId('edit-budget-btn');
+    await user.click(editBudgetBtn);
+
+    const budgetInput = screen.getByTestId('budget-input-field');
+    await user.clear(budgetInput);
+    await user.type(budgetInput, '700');
+
+    const saveBudgetBtn = screen.getByTestId('save-budget-btn');
+    await user.click(saveBudgetBtn);
+
+    const alert = await screen.findByRole('alert');
+    expect(alert).toBeInTheDocument();
+    expect(alert).toHaveTextContent(/Caution: You have utilized/i);
   });
 });

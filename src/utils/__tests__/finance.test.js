@@ -253,6 +253,27 @@ describe('Financial Calculation & Formatting Utilities', () => {
     it('should reject missing category or invalid date', () => {
       expect(validateTransaction({ ...validData, category: '' }).isValid).toBe(false);
       expect(validateTransaction({ ...validData, date: 'not-a-date' }).isValid).toBe(false);
+      expect(validateTransaction({ ...validData, date: '' }).isValid).toBe(false);
+    });
+
+    it('should reject non-object input payload', () => {
+      const result = validateTransaction(null);
+      expect(result.isValid).toBe(false);
+      expect(result.errors.general).toBe('Transaction data must be an object');
+    });
+  });
+
+  describe('formatCurrency fallback', () => {
+    it('should handle Intl.NumberFormat fallback on formatting errors', () => {
+      const originalIntl = Intl.NumberFormat;
+      Intl.NumberFormat = vi.fn().mockImplementation(() => {
+        throw new Error('Unsupported locale');
+      });
+
+      const formatted = formatCurrency(123.45);
+      expect(formatted).toBe('$123.45');
+
+      Intl.NumberFormat = originalIntl;
     });
   });
 });

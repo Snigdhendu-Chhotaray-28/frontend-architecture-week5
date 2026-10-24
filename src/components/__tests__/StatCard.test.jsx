@@ -45,4 +45,15 @@ describe('StatCard Component', () => {
     const card = screen.getByRole('region', { name: /Net Liquidity: \$1,200\.00/i });
     expect(card).toBeInTheDocument();
   });
+
+  it('renders raw string value directly when amount is not a number and not percentage', () => {
+    renderWithTheme(
+      <StatCard
+        title="Pending Approvals"
+        amount="Pending"
+        variant="balance"
+      />
+    );
+    expect(screen.getByText('Pending')).toBeInTheDocument();
+  });
 });

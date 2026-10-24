@@ -82,7 +82,7 @@ const ProgressFill = styled.div`
   width: ${({ $percentage }) => Math.min(100, Math.max(0, $percentage))}%;
   transition: width ${({ theme }) => theme.transitions.normal}, background-color ${({ theme }) => theme.transitions.normal};
 
-  ${({ $status, theme }) => {
+  ${({ $status }) => {
     switch ($status) {
       case 'critical':
         return css`background: linear-gradient(90deg, #f43f5e, #e11d48);`;

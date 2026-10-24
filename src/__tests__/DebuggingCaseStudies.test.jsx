@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { calculateTotals } from '../utils/finance';
 import { StorageService } from '../services/storage';
@@ -122,6 +122,43 @@ describe('Debugging Case Studies & Bug Reproduction Suite', () => {
       expect(alertBanner).toBeInTheDocument();
       expect(alertBanner).toHaveAttribute('aria-live', 'polite');
       expect(alertBanner).toHaveTextContent('Budget Exceeded: 105% spent');
+    });
+  });
+
+  /**
+   * CASE STUDY 5: Date Timezone Boundary Shift Bug in Transaction Date Formatting
+   * Problem: In financial reporting, dates entered as '2026-10-24' (date input standard)
+   * if parsed naively via new Date('2026-10-24') interpret as UTC midnight (00:00:00Z).
+   * In timezones west of UTC (e.g., EST/EDT UTC-4 or PST/PDT UTC-7), calling .toLocaleDateString()
+   * or .getDate() displays October 23rd! Financial records appear off by 1 day.
+   * Technique: Reproduce timezone offset discrepancy and verify localized date preservation.
+   * Fix: Parse [year, month, day] components explicitly into local calendar day.
+   */
+  describe('Case Study 5: Date Timezone Offset Boundary Fix', () => {
+    it('demonstrates UTC midnight boundary shift problem vs timezone-safe parsing', () => {
+      const rawDateStr = '2026-10-24';
+
+      // Naive parsing: interprets as UTC 00:00:00
+      const naiveDate = new Date(rawDateStr);
+      expect(naiveDate.getUTCFullYear()).toBe(2026);
+      expect(naiveDate.getUTCMonth()).toBe(9); // 0-indexed October
+      expect(naiveDate.getUTCDate()).toBe(24);
+
+      // Safe date formatter function used in FinTrack Pro:
+      const formatLocalDate = (dateStr) => {
+        const [year, month, day] = dateStr.split('-').map(Number);
+        const local = new Date(year, month - 1, day);
+        return {
+          year: local.getFullYear(),
+          month: local.getMonth() + 1,
+          day: local.getDate(),
+        };
+      };
+
+      const parsed = formatLocalDate(rawDateStr);
+      expect(parsed.year).toBe(2026);
+      expect(parsed.month).toBe(10);
+      expect(parsed.day).toBe(24);
     });
   });
 });

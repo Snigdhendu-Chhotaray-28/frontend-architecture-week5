@@ -13,9 +13,13 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'],
       exclude: [
         'node_modules/**',
+        'dist/**',
         'src/main.jsx',
         '**/*.d.ts',
         'test/**',
+        'vite.config.js',
+        'eslint.config.js',
+        'capture_screenshots.js',
       ],
       thresholds: {
         lines: 85,

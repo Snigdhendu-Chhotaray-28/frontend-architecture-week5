@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import styled, { css } from 'styled-components';
-import { Search, Filter, ArrowUpDown, Inbox, X } from 'lucide-react';
+import { Search, Filter, Inbox, X } from 'lucide-react';
 import { TransactionItem } from './TransactionItem';
 import { filterAndSortTransactions } from '../utils/finance';
 

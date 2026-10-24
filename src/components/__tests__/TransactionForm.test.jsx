@@ -67,4 +67,17 @@ describe('TransactionForm Component', () => {
     expect(screen.getByTestId('title-input')).toHaveValue('');
     expect(screen.getByTestId('amount-input')).toHaveValue(null);
   });
+
+  it('displays inline error when date field is emptied', async () => {
+    const user = userEvent.setup();
+    renderWithTheme(<TransactionForm onAddTransaction={vi.fn()} />);
+
+    const dateInput = screen.getByTestId('date-input');
+    await user.clear(dateInput);
+
+    const submitBtn = screen.getByTestId('submit-transaction-btn');
+    await user.click(submitBtn);
+
+    expect(screen.getByTestId('date-error')).toHaveTextContent('Date is required');
+  });
 });

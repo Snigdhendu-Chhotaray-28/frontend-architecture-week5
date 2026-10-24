@@ -11,7 +11,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
-    "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint src --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",
@@ -25,7 +25,11 @@
     "@testing-library/user-event": "^14.5.2",
     "@vitejs/plugin-react": "^4.3.4",
     "@vitest/coverage-v8": "^2.1.8",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "jsdom": "^25.0.1",
+    "puppeteer-core": "^25.16.0",
     "vite": "^5.4.11",
     "vitest": "^2.1.8"
   }

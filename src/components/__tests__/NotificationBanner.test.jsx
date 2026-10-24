@@ -42,4 +42,11 @@ describe('NotificationBanner Component', () => {
 
     expect(handleClose).toHaveBeenCalledTimes(1);
   });
+
+  it('renders default info variant with info icon when no variant is specified', () => {
+    renderWithTheme(<NotificationBanner message="Standard information update" />);
+    const banner = screen.getByRole('alert');
+    expect(banner).toBeInTheDocument();
+    expect(banner).toHaveTextContent('Standard information update');
+  });
 });

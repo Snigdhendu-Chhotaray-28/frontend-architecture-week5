@@ -64,6 +64,13 @@ describe('StorageService Persistence Layer', () => {
       StorageService.saveTheme('light');
       expect(StorageService.loadTheme()).toBe('light');
     });
+
+    it('should return false if localStorage.setItem throws in saveTheme', () => {
+      vi.spyOn(Storage.prototype, 'setItem').mockImplementationOnce(() => {
+        throw new Error('QuotaExceeded');
+      });
+      expect(StorageService.saveTheme('light')).toBe(false);
+    });
   });
 
   describe('clearAll', () => {
@@ -72,6 +79,13 @@ describe('StorageService Persistence Layer', () => {
       StorageService.saveTheme('light');
       expect(StorageService.clearAll()).toBe(true);
       expect(StorageService.loadBudget()).toBe(INITIAL_BUDGET);
+    });
+
+    it('should return false if localStorage.removeItem throws in clearAll', () => {
+      vi.spyOn(Storage.prototype, 'removeItem').mockImplementationOnce(() => {
+        throw new Error('SecurityError');
+      });
+      expect(StorageService.clearAll()).toBe(false);
     });
   });
 });
